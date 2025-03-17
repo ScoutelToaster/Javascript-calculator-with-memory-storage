@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+public class Calculator {
+    private static Double lastResult = null; // Stores the last calculation result
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean keepRunning = true;
+
+        System.out.println("Welcome to Memory Calculator!");
+
+        while (keepRunning) {
+            double num1;
+            if (lastResult != null) {
+                System.out.println("Last result: " + lastResult);
+                System.out.print("Use last result? (y/n): ");
+                char useLast = scanner.next().charAt(0);
+                if (useLast == 'y' || useLast == 'Y') {
+                    num1 = lastResult;
+                } else {
+                    System.out.print("Enter first number: ");
+                    num1 = scanner.nextDouble();
+                }
+            } else {
+                System.out.print("Enter first number: ");
+                num1 = scanner.nextDouble();
+            }
+
+            System.out.print("Enter operator (+, -, *, /): ");
+            char operator = scanner.next().charAt(0);
+
+            System.out.print("Enter second number: ");
+            double num2 = scanner.nextDouble();
+
+            double result = 0;
+            boolean validOperation = true;
+
+            switch (operator) {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 != 0) {
+                        result = num1 / num2;
+                    } else {
+                        System.out.println("Error: Division by zero is not allowed.");
+                        validOperation = false;
+                    }
+                    break;
+                default:
+                    System.out.println("Error: Invalid operator!");
+                    validOperation = false;
+            }
+
+            if (validOperation) {
+                System.out.println("Result: " + result);
+                lastResult = result; // Store the result
+            }
+
+            System.out.print("Do you want to perform another calculation? (y/n): ");
+            char choice = scanner.next().charAt(0);
+            if (choice == 'n' || choice == 'N') {
+                keepRunning = false;
+            }
+        }
+
+        System.out.println("Goodbye!");
+        scanner.close();
+    }
+}
